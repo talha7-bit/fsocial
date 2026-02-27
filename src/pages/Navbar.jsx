@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth.js";
 const Navbar = () => {
   const {data:isauth,isLoading:authloading}=useAuth();
   const navigate=useNavigate();
+  const URL=import.meta.env.VITE_API_URL;
 
   const handleclick=()=>{
     if(!authloading){

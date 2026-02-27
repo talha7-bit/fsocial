@@ -9,10 +9,11 @@ import { toast } from "react-toastify";
 
 const Userinfo = () => {
   const queryClient = useQueryClient();
+  const URL=import.meta.env.VITE_API_URL;
   const { data: userinfo, isLoading } = useQuery({
     queryKey: ["userinfo"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/api/user/userinfo", {
+      const res = await axios.get(`${URL}/api/user/userinfo`, {
         withCredentials: true,
       });
       return res.data.data;
@@ -22,7 +23,7 @@ const Userinfo = () => {
    const { data: follow, isLoading: floading } = useQuery({
     queryKey: ["follow"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/api/user/getfandf", {
+      const res = await axios.get(`${URL}/api/user/getfandf`, {
         withCredentials: true,
       });
       return res.data.data;
@@ -32,7 +33,7 @@ const Userinfo = () => {
   const { data: posts = [] } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/api/post/getall", {
+      const res = await axios.get(`${URL}/api/post/getall`, {
         withCredentials: true,
       });
       const allPosts = res.data.data;
@@ -42,7 +43,7 @@ const Userinfo = () => {
         try {
          
           const likeRes = await axios.get(
-            `http://localhost:3000/api/post/isliked/${p._id}`,
+            `${URL}/api/post/isliked/${p._id}`,
             { withCredentials: true }
           );
           postsWithLikes.push({ ...p, isliked: likeRes.data.data });
@@ -58,7 +59,7 @@ const Userinfo = () => {
   const { mutate } = useMutation({
     mutationFn: async (id) => {
       const response = await axios.post(
-        `http://localhost:3000/api/user/like/${id}`,
+        `${URL}/api/user/like/${id}`,
         {},
         { withCredentials: true }
       );
@@ -74,7 +75,7 @@ const Userinfo = () => {
 
   const {mutate:deletep}=useMutation({
   mutationFn:async(id)=>{
-    const response=await axios.post(`http://localhost:3000/api/post/delete/${id}`,{},{withCredentials:true});
+    const response=await axios.post(`${URL}/api/post/delete/${id}`,{},{withCredentials:true});
     return response.data;
   },
   onSuccess:(res)=>{
@@ -94,7 +95,7 @@ const Userinfo = () => {
 
   const {mutate:logout}=useMutation({
     mutationFn:async()=>{
-      const res=await axios.post("http://localhost:3000/api/user/logout",{},{withCredentials:true});
+      const res=await axios.post(`${URL}/api/user/logout`,{},{withCredentials:true});
       return res.data.data
     },
     onSuccess:()=>{

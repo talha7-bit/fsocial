@@ -8,10 +8,11 @@ import Navbar from './Navbar';
 const Signup = () => {
     const {register,handleSubmit}=useForm();
     const navigate=useNavigate();
+    const URL=import.meta.env.VITE_API_URL;
 
     const {mutate}=useMutation({
         mutationFn:async(data)=>{
-            const res=await axios.post("http://localhost:3000/api/user/signup",data,{withCredentials:true});
+            const res=await axios.post(`${URL}/api/user/signup`,data,{withCredentials:true});
             return res.data;
         },
         onSuccess:(res)=>{

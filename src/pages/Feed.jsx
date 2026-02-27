@@ -8,19 +8,21 @@ import { useNavigate } from "react-router-dom";
 const Feed = () => {
     const queryclient=useQueryClient();
     const navigate=useNavigate();
+    const URL=import.meta.env.VITE_API_URL;
+    console.log(URL);
     const {data:isauth,isLoading:authloading}=useAuth();
   const {data:posts=[],isLoading}=useQuery({
     queryKey:["fetchallposts"],
     queryFn:async()=>{
-        const response=await axios.get("http://localhost:3000/api/post/getallposts",{withCredentials:true});
+        const response=await axios.get(`${URL}/api/post/getallposts`,{withCredentials:true});
         const allposts=response.data.data;
 
         const postswithlikes=[];
         for(let p of allposts){
            if(isauth && isauth==200){
              try {
-                const res=await axios.get(`http://localhost:3000/api/post/isliked/${p._id}`,{withCredentials:true});
-                const ress=await axios.get(`http://localhost:3000/api/post/isfollowed/${p._id}`,{withCredentials:true});
+                const res=await axios.get(`${URL}/api/post/isliked/${p._id}`,{withCredentials:true});
+                const ress=await axios.get(`${URL}/api/post/isfollowed/${p._id}`,{withCredentials:true});
                 postswithlikes.push({...p,isliked:res.data.data,isfollowed:ress.data.data});
             } catch (error) {
                 console.log("an error occured",error)
@@ -35,7 +37,7 @@ const Feed = () => {
 
   const {mutate}=useMutation({
     mutationFn:async(id)=>{
-        const response=await axios.post(`http://localhost:3000/api/user/like/${id}`,{},{withCredentials:true});
+        const response=await axios.post(`${URL}/api/user/like/${id}`,{},{withCredentials:true});
         return response.data;
     },
     onSuccess:(res)=>{
@@ -55,7 +57,7 @@ const Feed = () => {
 
   const {mutate:follow}=useMutation({
     mutationFn:async(id)=>{
-        const response=await axios.post(`http://localhost:3000/api/follower/follow/${id}`,{},{withCredentials:true});
+        const response=await axios.post(`${URL}/api/follower/follow/${id}`,{},{withCredentials:true});
         return response.data;
     },
     onSuccess:(res)=>{

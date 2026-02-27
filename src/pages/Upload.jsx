@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 const UploadPage = () => {
     const navigate=useNavigate();
+    const URL=import.meta.env.VITE_API_URL;
   const [preview, setPreview] = useState(null);
   const {
     register,
@@ -17,7 +18,7 @@ const UploadPage = () => {
 
   const {mutate,isPending}=useMutation({
     mutationFn:async(data)=>{
-        const response=await axios.post("http://localhost:3000/api/post/post",data,{withCredentials:true,
+        const response=await axios.post(`${URL}/api/post/post`,data,{withCredentials:true,
             headers:{
                 "Content-Type":"multipart/form-data"
             }
