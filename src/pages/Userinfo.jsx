@@ -100,8 +100,8 @@ const Userinfo = () => {
       return res.data.data
     },
     onSuccess:()=>{
-      navigate("/")
       queryClient.invalidateQueries(["Auth"]);
+      navigate("/")
     }
   })
   const handlelogout=()=>{

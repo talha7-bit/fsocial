@@ -4,6 +4,7 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Navbar from "./Navbar";
 
 const UploadPage = () => {
     const navigate=useNavigate();
@@ -93,6 +94,7 @@ const UploadPage = () => {
           </button>
         </form>
       </div>
+      <Navbar/>
     </div>
   );
 };
