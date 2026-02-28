@@ -17,7 +17,7 @@ const Login = () => {
             return res.data;
         },
         onSuccess:(res)=>{
-            window.location.reload();
+          navigate("/");
         },
         onError:(err)=>{
             alert("an error occured try again")

@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 const Userinfo = () => {
   const queryClient = useQueryClient();
   const URL=import.meta.env.VITE_API_URL;
+  const navigate=useNavigate();
   const { data: userinfo, isLoading } = useQuery({
     queryKey: ["userinfo"],
     queryFn: async () => {
@@ -100,7 +101,7 @@ const Userinfo = () => {
     },
     onSuccess:()=>{
       queryClient.invalidateQueries(["Auth"]);
-      window.location.reload();
+      navigate("/")
     }
   })
   const handlelogout=()=>{
